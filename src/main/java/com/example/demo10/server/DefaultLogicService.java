@@ -122,4 +122,14 @@ public class DefaultLogicService implements DefaultService {
         }
         return statisticsList;
     }
+
+    @Override
+    public boolean isLeader(Users user) {
+        List<Integer> group_ids = requestDao.selectAllLeaderId();
+        if(group_ids.contains(user.getId()))
+            return true;
+
+        return false;
+
+    }
 }

@@ -350,24 +350,23 @@ public class RequestDao {
         return user;
     }
 
+    //select all group id
+    public List<Integer> selectAllLeaderId() {
+        List<Integer> groupidList = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `groups`");
 
-    //print exc
-    private void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
+            while (resultSet.next()) {
+                int group_id = resultSet.getInt(3);
+
+                groupidList.add(group_id);
             }
+        } catch (SQLException e) {
+            printSQLException(e);
         }
+        return groupidList;
     }
-
 
     // select requests by date
     public List<Requests> selectRequestsByDate(Date start, Date last) {
@@ -418,6 +417,23 @@ public class RequestDao {
             e.printStackTrace();
         }
         return requestsList;
+    }
+
+    //print exc
+    private void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
+            }
+        }
     }
 
 

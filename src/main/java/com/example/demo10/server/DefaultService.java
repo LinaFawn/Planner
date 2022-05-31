@@ -20,5 +20,5 @@ public interface DefaultService {
     Requests getRequestById(int requestId);
     List<Statistics> getEmployeeStatistics(Date start_date, Date last_date);
     List<Statistics> getCoursesStatistics(Date start_date, Date last_date);
-
+    boolean isLeader(Users user);
 }

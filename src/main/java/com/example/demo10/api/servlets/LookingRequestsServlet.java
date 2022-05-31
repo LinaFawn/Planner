@@ -38,8 +38,9 @@ public class LookingRequestsServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.write(jsonTask);
         } else{
-           // if(user.getId() == )
-            //getAllRequestsfromGroup(leaderId);
+           if(defaultService.isLeader(user)){
+
+           }
         }
     }
 
