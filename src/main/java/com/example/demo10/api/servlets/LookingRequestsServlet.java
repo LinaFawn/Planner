@@ -26,22 +26,15 @@ public class LookingRequestsServlet extends HttpServlet {
         final HttpSession session = request.getSession();
         Users user = (Users) session.getAttribute("user");
         String role = user.getRole();
+        List<Requests> requestsList = defaultService.getAllowRequests(user);
 
-        if(role.equals("education")|| role.equals("leaders") || role.equals("directorate")){
+        String jsonTask = new ObjectMapper().writeValueAsString(requestsList);
 
-            List<Requests> requestsList = defaultService.getAllRequests();
-            String jsonTask = new ObjectMapper().writeValueAsString(requestsList);
+        response.setContentType("application/json; charset=UTF-8");
+        response.setStatus(200);
+        PrintWriter out = response.getWriter();
+        out.write(jsonTask);
 
-
-            response.setContentType("application/json; charset=UTF-8");
-            response.setStatus(200);
-            PrintWriter out = response.getWriter();
-            out.write(jsonTask);
-        } else{
-           if(defaultService.isLeader(user)){
-
-           }
-        }
     }
 
     @Override

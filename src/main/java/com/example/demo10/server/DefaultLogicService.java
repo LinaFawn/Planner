@@ -1,6 +1,7 @@
 package com.example.demo10.server;
 
 import com.example.demo10.database.dao.RequestDao;
+import com.example.demo10.database.model.Groups;
 import com.example.demo10.database.model.Requests;
 import com.example.demo10.database.model.Statistics;
 import com.example.demo10.database.model.Users;
@@ -20,7 +21,7 @@ public class DefaultLogicService implements DefaultService {
     @Override
     public boolean isLoginPresent(String login) {
         Users user = requestDao.selectUserByLogin(login);
-        if(user == null)
+        if (user == null)
             return false;
         return true;
 
@@ -29,7 +30,7 @@ public class DefaultLogicService implements DefaultService {
     @Override
     public boolean isUserAuthenticated(String login, String password) {
         Users user = requestDao.selectUserByLogin(login);
-        if(user == null || !user.getPass_word().equals(password))
+        if (user == null || !user.getPass_word().equals(password))
             return false;
         return true;
     }
@@ -87,7 +88,7 @@ public class DefaultLogicService implements DefaultService {
         List<Requests> requestsList = requestDao.selectRequestsByDate(start_date, last_date);
         List<Date> dates = new ArrayList<>();
 
-        for(Requests i: requestsList){
+        for (Requests i : requestsList) {
             dates.add(i.getStart_date());
         }
 
@@ -108,7 +109,7 @@ public class DefaultLogicService implements DefaultService {
         List<Requests> requestsList = requestDao.selectRequestsByDate(start_date, last_date);
         List<String> courses = new ArrayList<>();
 
-        for(Requests i: requestsList){
+        for (Requests i : requestsList) {
             courses.add(i.getName());
         }
 
@@ -124,12 +125,25 @@ public class DefaultLogicService implements DefaultService {
     }
 
     @Override
-    public boolean isLeader(Users user) {
-        List<Integer> group_ids = requestDao.selectAllLeaderId();
-        if(group_ids.contains(user.getId()))
-            return true;
+    public List<Requests> getAllowRequests(Users user) {
+        String role = user.getRole();
+        List<Requests> requestsList = new ArrayList<>();
+        List<Groups> groupsList = requestDao.selectAllGroups();
 
-        return false;
+//        if (role.equals("education") || role.equals("leaders") || role.equals("directorate"))
+            //requestsList = requestDao.selectRequestsByStatus("allow leader group");
 
+        if(groupsList.contains(user.getId())){
+            int user_id = user.getId();
+            Groups temp = groupsList.stream()
+                    .filter(a -> a.equals(user_id))
+                    .findFirst()
+                    .orElse(null);
+            System.out.println(temp);
+        }
+
+
+        return requestsList;
     }
+
 }

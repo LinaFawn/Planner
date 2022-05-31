@@ -1,5 +1,6 @@
 package com.example.demo10.database.dao;
 
+import com.example.demo10.database.model.Groups;
 import com.example.demo10.database.model.Requests;
 import com.example.demo10.database.model.Users;
 
@@ -351,21 +352,24 @@ public class RequestDao {
     }
 
     //select all group id
-    public List<Integer> selectAllLeaderId() {
-        List<Integer> groupidList = new ArrayList<>();
+    public List<Groups> selectAllGroups() {
+        List<Groups> groupList = new ArrayList<>();
         try (Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `groups`");
 
             while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
                 int group_id = resultSet.getInt(3);
 
-                groupidList.add(group_id);
+                Groups group = new Groups(id, name, group_id);
+                groupList.add(group);
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
-        return groupidList;
+        return groupList;
     }
 
     // select requests by date
@@ -418,6 +422,85 @@ public class RequestDao {
         }
         return requestsList;
     }
+
+    // select requests by status
+    public List<Requests> selectRequestsByStatus(String status) {
+        List<Requests> requestsList = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+            try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
+                String sql = "SELECT * FROM requests WHERE status=?";
+                try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setString(1, status);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        int reqid = resultSet.getInt(1);
+                        String name = resultSet.getString(2);
+                        String link = resultSet.getString(3);
+                        String company = resultSet.getString(4);
+                        String training_area = resultSet.getString(5);
+                        String type = resultSet.getString(6);
+                        String reason = resultSet.getString(7);
+                        String format = resultSet.getString(8);
+                        Date start_date = resultSet.getDate(9);
+                        int duration = resultSet.getInt(10);
+                        int price = resultSet.getInt(11);
+                        String link_review = resultSet.getString(12);
+                        String comment = resultSet.getString(13);
+
+                        Requests req = new Requests(reqid, name, link, company, training_area, type, reason, format, start_date, duration, price, link_review, comment, status);
+                        requestsList.add(req);
+                    }
+                } catch (SQLException e) {
+                    printSQLException(e);
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return requestsList;
+    }
+/*
+    // 1 user by user_id
+    public List<Users> selectGroupIdByGroup(int groupId) {
+        List<Users> usersList = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+            try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
+                String sql = "SELECT * FROM user_group WHERE group_id=?";
+                try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, g);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    if (resultSet.next()) {
+                        int id = resultSet.getInt(1);
+                        String login = resultSet.getString(2);
+                        String password1 = resultSet.getString(3);
+                        String first = resultSet.getString(4);
+                        String second = resultSet.getString(5);
+                        String last = resultSet.getString(6);
+                        String email = resultSet.getString(7);
+
+                        user = new Users(id, login, password1, first, second, last, email, null);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return user;
+    }*/
 
     //print exc
     private void printSQLException(SQLException ex) {

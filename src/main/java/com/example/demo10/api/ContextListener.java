@@ -1,6 +1,5 @@
 package com.example.demo10.api;
 
-import com.example.demo10.api.servlets.dmo.Excel;
 import com.example.demo10.database.dao.RequestDao;
 import com.example.demo10.server.DefaultLogicService;
 import com.example.demo10.server.DefaultService;
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class ContextListener implements ServletContextListener {
     private DefaultService defaultService;
     private RequestDao requestDao;
-    private Excel excel;
+   // private Excel excel;
     private ScheduledExecutorService scheduler;
 
     @Override
@@ -39,7 +38,7 @@ public class ContextListener implements ServletContextListener {
 
         scheduler.scheduleAtFixedRate(command, initialDelay, period, unit);
 
-        excel = new Excel();
+      //  excel = new Excel();
 
         servletContext.setAttribute("service", defaultService);
     }
