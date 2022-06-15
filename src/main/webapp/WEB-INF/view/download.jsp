@@ -14,7 +14,7 @@
 
         <input type="date" required placeholder="start_date" name="start_date"><br>
         <input type="date" required placeholder="end_date" name="end_date"><br><br>
-        <input class="button" type="submit" value="Войти">
+        <input class="button" type="submit" value="Скачать">
 
     </form>
 </div>

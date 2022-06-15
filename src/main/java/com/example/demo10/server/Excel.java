@@ -1,5 +1,6 @@
 package com.example.demo10.server;
 
+import com.example.demo10.database.model.Statistics;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -9,6 +10,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.io.*;
+import java.util.List;
 
 public class Excel {
     private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
@@ -19,7 +21,7 @@ public class Excel {
         return style;
     }
 
-    public HSSFWorkbook docs()  {
+    public HSSFWorkbook docs(List<Statistics> coursesStatistics)  {
 
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Employees sheet");
@@ -34,46 +36,25 @@ public class Excel {
 
         // EmpNo
         cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue("ФИО");
+        cell.setCellValue("Название курса");
         cell.setCellStyle(style);
         // EmpName
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Название курса");
-        cell.setCellStyle(style);
-        // Salary
-        cell = row.createCell(2, CellType.STRING);
-        cell.setCellValue("Дата начала");
-        cell.setCellStyle(style);
-        // Grade
-        cell = row.createCell(3, CellType.STRING);
-        cell.setCellValue("Продолжительность");
-        cell.setCellStyle(style);
-        // Bonus
-        cell = row.createCell(4, CellType.STRING);
-        cell.setCellValue("Bonus");
-        cell.setCellStyle(style);
+        cell.setCellValue("Количество людей");
 
-        // Data
+        for(Statistics statistics: coursesStatistics) {
 
             rownum++;
             row = sheet.createRow(rownum);
 
             // EmpNo (A)
             cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("emp.getEmpNo()");
+            cell.setCellValue(statistics.getName());
             // EmpName (B)
             cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue("emp.getEmpName()");
-            // Salary (C)
-            cell = row.createCell(2, CellType.NUMERIC);
-            cell.setCellValue("emp.getSalary()");
-            // Grade (D)
-            cell = row.createCell(3, CellType.NUMERIC);
-            cell.setCellValue("emp.getGrade()");
-            // Bonus (E)
-            String formula = "0.1*C" + (rownum + 1) + "*D" + (rownum + 1);
-            cell = row.createCell(4, CellType.FORMULA);
-            cell.setCellFormula(formula);
+            cell.setCellValue(statistics.getCount());
+
+        }
 
         File file = new File(Excel.class.getClassLoader().getResource("YearReporcopyt.xls").getFile());
         file.getParentFile().mkdirs();
