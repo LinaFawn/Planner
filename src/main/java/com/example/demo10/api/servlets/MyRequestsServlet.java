@@ -61,9 +61,9 @@ public class MyRequestsServlet extends HttpServlet {
 
         System.out.println(req);
 
-        //defaultService.insertRequest(req);
+        defaultService.insertRequest(req);
 
-        //response.sendRedirect("/admin");
+        response.sendRedirect("/admin");
 
     }
 }

@@ -1,7 +1,6 @@
 package com.example.demo10.api.servlets;
 
 import com.example.demo10.database.model.Requests;
-import com.example.demo10.database.model.Users;
 import com.example.demo10.server.DefaultService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,11 +10,9 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.util.List;
 
-@WebServlet(name = "UpdateRequestServlet", value = "/update")
-public class UpdateRequestServlet extends HttpServlet {
+@WebServlet(name = "CreateServlet", value = "/create")
+public class CreateServlet extends HttpServlet {
     private DefaultService defaultService;
 
     @Override
@@ -25,21 +22,15 @@ public class UpdateRequestServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/view/update.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/create.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //Requests updateRequest = defaultService.updateRequest(requests, requestsList);
-
-
-        final int req_id = Integer.parseInt(request.getParameter("id"));
         final String name = request.getParameter("name");
         final String link = request.getParameter("link");
-
-        System.out.println(req_id);
-/*        final String company = request.getParameter("company");
+        final String company = request.getParameter("company");
         final String training_area = request.getParameter("training_area");
         final String type = request.getParameter("type");
         final String reason = request.getParameter("reason");
@@ -48,12 +39,12 @@ public class UpdateRequestServlet extends HttpServlet {
         final int duration = Integer.parseInt(request.getParameter("duration"));
         final int price = Integer.parseInt(request.getParameter("price"));
         final String link_review = request.getParameter("link_review");
-        final String comment = request.getParameter("comment");*/
+        final String comment = request.getParameter("comment");
+
+        Requests requests = new Requests(0, name, link, company, training_area, type, reason, format, start_date, duration, price, link_review, comment, "created");
+
+        defaultService.insertRequest(requests);
 /*
-        Requests requests = new Requests(req_id, name, link, company, training_area, type, reason, format, start_date, duration, price, link_review, comment, "updated");
-
-        Requests update = defaultService.updateRequest(requests);
-
         String jsonTask = new ObjectMapper().writeValueAsString(update);
         response.setContentType("application/json; charset=UTF-8");
         response.setStatus(200);
@@ -61,5 +52,3 @@ public class UpdateRequestServlet extends HttpServlet {
         out.write(jsonTask);*/
     }
 }
-
-

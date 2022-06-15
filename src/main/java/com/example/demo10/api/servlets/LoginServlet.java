@@ -17,10 +17,10 @@ public class LoginServlet extends HttpServlet {
         this.defaultService = (DefaultService) getServletContext().getAttribute("service");
     }
 
-/*    @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
-    }*/
+        request.getRequestDispatcher("/WEB-INF/view/login_n.jsp").forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
             request.getSession().setAttribute("user", user);
 
-            //moveToMenu(request, response, user.getRole());
+            moveToMenu(request, response, user.getRole());
         } else {
 
         response.sendRedirect("/demo10_war_exploded/");
@@ -50,10 +50,10 @@ public class LoginServlet extends HttpServlet {
 
         if (role.equals("directorate") || role.equals("leaders") || role.equals("education")) {
 
-            req.getRequestDispatcher("/WEB-INF/view/admin_menu.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/view/admin.jsp").forward(req, res);
 
         } else {
-            req.getRequestDispatcher("/WEB-INF/view/user_menu.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/view/user.jsp").forward(req, res);
         }
     }
 }

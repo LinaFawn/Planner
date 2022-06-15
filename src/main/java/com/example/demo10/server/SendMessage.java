@@ -7,7 +7,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 public class SendMessage {
     public void SendMessage(String reason, String toEmail) {
-
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtps");
         props.put("mail.smtps.host", "smtp.mail.ru");
@@ -21,11 +20,8 @@ public class SendMessage {
 
         try {
             message.setSubject("Уведомление на тему предстоящего обучения!");
-
             message.setText(reason);
-
             message.addRecipient(Message.RecipientType.TO, new InternetAddress("tcipkoalina2000@gmail.com"));
-
             message.setSentDate(new Date());
             String userLogin;
             message.addFrom(new Address[]{new InternetAddress("tcipkoalina2000@mail.ru")});

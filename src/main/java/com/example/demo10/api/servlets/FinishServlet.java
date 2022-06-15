@@ -29,6 +29,6 @@ public class FinishServlet extends HttpServlet {
         session.removeAttribute("login");
         session.removeAttribute("role");
 
-        resp.sendRedirect("/login");
+        resp.sendRedirect("/demo10_war/");
     }
 }

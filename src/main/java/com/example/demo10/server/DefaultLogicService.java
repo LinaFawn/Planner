@@ -130,16 +130,16 @@ public class DefaultLogicService implements DefaultService {
         List<Requests> requestsList = new ArrayList<>();
         List<Groups> groupsList = requestDao.selectAllGroups();
 
-//        if (role.equals("education") || role.equals("leaders") || role.equals("directorate"))
-            //requestsList = requestDao.selectRequestsByStatus("allow leader group");
+        if (role.equals("education") || role.equals("leaders") || role.equals("directorate"))
+            requestsList = requestDao.selectAllRequests();
 
-        if(groupsList.contains(user.getId())){
+        else if(groupsList.contains(user.getId())){
             int user_id = user.getId();
             Groups temp = groupsList.stream()
                     .filter(a -> a.equals(user_id))
                     .findFirst()
                     .orElse(null);
-            System.out.println(temp);
+            requestsList = requestDao.selectRequestsByUserId(user.getId());
         }
 
 
