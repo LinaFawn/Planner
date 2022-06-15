@@ -56,8 +56,8 @@ class UsersDaoTest extends RequestDao {
     @Test
     void insertRequest() {
         Requests request = new Requests(
-                23,
-                "sdsd",
+                54,
+                "new",
                 "sdsd",
                 "sdsd",
                 "sdsd",

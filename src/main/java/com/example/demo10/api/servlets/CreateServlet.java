@@ -41,9 +41,10 @@ public class CreateServlet extends HttpServlet {
         final String link_review = request.getParameter("link_review");
         final String comment = request.getParameter("comment");
 
-        Requests requests = new Requests(0, name, link, company, training_area, type, reason, format, start_date, duration, price, link_review, comment, "created");
+        Requests requests = new Requests(78, name, link, company, training_area, type, reason, format, start_date, duration, price, link_review, comment, "created");
 
         defaultService.insertRequest(requests);
+        request.getRequestDispatcher("/WEB-INF/view/admin.jsp").forward(request, response);
 /*
         String jsonTask = new ObjectMapper().writeValueAsString(update);
         response.setContentType("application/json; charset=UTF-8");

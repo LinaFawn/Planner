@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 01.11.2016
-  Time: 19:09
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -26,11 +20,9 @@
     <input type="text" required placeholder="price" name="price"/>
     <input type="text" required placeholder="link_review" name="link_review"/>
     <input type="text" required placeholder="comment" name="comment"/>
+
     <input class="button" type="submit" value="Создать">
 
-
 </form>
-<a href="<c:url value="/logout"/>">Logout</a>
-<a href="<c:url value="/update"/>">Update</a>
 </body>
 </html>

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 class DefaultLogicServiceTest{
     DefaultLogicService defaultLogicService;
 
@@ -27,12 +29,24 @@ class DefaultLogicServiceTest{
     @Test
     public void insertTest(){
         RequestDao requestDao = new RequestDao();
-        List<Users> users = requestDao.selectAllUsers();
-        System.out.println(users);
         defaultLogicService = new DefaultLogicService(requestDao);
-
-        boolean flag = defaultLogicService.isLoginPresent("ABRA");
-        System.out.println(flag);
+        Requests request = new Requests(
+                54,
+                "from insert",
+                "sdsd",
+                "sdsd",
+                "sdsd",
+                "sdsd",
+                "sdsd",
+                "sdsd",
+                Date.valueOf("2015-03-31"),//date
+                45,
+                10000,
+                "sdsd",
+                null,
+                null
+        );
+        defaultLogicService.insertRequest(request);
     }
 
 
